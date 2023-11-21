@@ -1,0 +1,1 @@
+To do list created with local postgres database using pgadmin4. In order to emulate, you'll have to create a database in your local host called "permalist" and a table with two columns, id and title. And insert the corresponing password to connect to the database.
