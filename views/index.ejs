@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List project</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1 class="title">Get it Done.</h1>
+
+    <!-- To add an item -->
+    <form class="add-container" action="/add" method="post">
+        <input class="add-text-input" type="text" name="newItem" placeholder="Add a to do" autocomplete="off" >
+        <button class="add-button" type="submit">+</button>
+    </form>
+    
+    <div id="items-container" class="items-list-container">
+        <% items.forEach((item, index) => { %>
+            <div class="items" >
+                <!-- To delete an item -->
+                <form id="delete<%=item.id%>" class="deleteButton" action="/delete" method="post">
+                    <input onchange="this.form.submit()" type="checkbox" name="deleteItem" value="<%=item.id%>">
+                </form>
+
+                <!-- To display items -->
+                <p id="title<%=item.id%>" class="itemTitle"> <%=item.title %> </p>
+
+                <!-- To edit an item -->
+                <button id="edit<%=item.id%>" onclick="handler ('<%=item.id%>')" >
+                    <img src="/assets/pencil-solid.svg" class="icon" alt="edit-button"> 
+                </button>
+
+                <form id="updateItemForm" class="editItem" action="/edit" method="post">
+                    <input type="text" name="itemToEdit" value="<%=item.id%>" hidden>
+                    <input id="editInput<%=item.id%>" class="edit-text-area" type="text" placeholder="<%=item.title %>" name="newTitle" hidden autocomplete="off">
+                    <button id="editButton<%=item.id%>" class="editButton" type="submit" hidden>
+                        <img class="icon" src="/assets/check-solid.svg" alt="tick image">
+                    </button>
+                </form>
+            </div>
+        <% }); %>
+        
+    </div>
+
+    <script>
+        function handler (id) {
+            document.getElementById("delete"+id).setAttribute("hidden", true);
+            document.getElementById("title"+id).setAttribute("hidden", true);
+            document.getElementById("edit"+id).setAttribute("hidden", true);
+            document.getElementById("editInput"+id).removeAttribute("hidden");
+            document.getElementById("editButton"+id).removeAttribute("hidden");
+        };
+    </script>
+
+    <script>
+        const itemsContainer = document.getElementById("items-container");
+        const lastChild = itemsContainer.lastElementChild;
+        lastChild.classList.add("lastChild");
+    </script>
+</body>
+</html>
